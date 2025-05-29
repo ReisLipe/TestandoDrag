@@ -22,7 +22,3 @@ struct MainViewBckg: View {
         }
     }
 }
-
-#Preview {
-    MainViewBckg()
-}
