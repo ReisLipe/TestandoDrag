@@ -12,6 +12,6 @@ struct Card: Identifiable {
     let id: UUID
     var title: String
     var position: CGSize = .zero
-    var size: CGSize = .zero
+    var size: CGSize = .init(width: 200, height: 100)
     var scale: CGFloat = 1.0
 }

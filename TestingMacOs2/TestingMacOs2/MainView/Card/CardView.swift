@@ -60,35 +60,22 @@ struct CardView: View {
             .offset(x: card.position.width + dragOffset.width,
                     y: card.position.height + dragOffset.height)
             .gesture(
-                SimultaneousGesture (
-                    DragGesture()
-                        .onChanged { value in
-                            dragOffset = value.translation
-                        }
-                        .onEnded { value in
-                            card.position.width += dragOffset.width
-                            card.position.height += dragOffset.height
-                            card.position = applyBoundaryLimits(card, x: card.position.width, y: card.position.height)
-                            
-                            // Reset do offset temporário
-                            dragOffset = .zero
-                            
-                            // Resolve colisões
-                            checkAndResolveCollisions(for: cardIndex, at: card.position)
-                        },
-                    
-                    MagnificationGesture()
-                        .onChanged { value in
-                            let newScale = lastScale * value
-                            self.scale = min(maxScale, max(minScale, newScale))
-                        }
-                        .onEnded { value in
-                            self.lastScale = self.scale
-                            card.scale = self.scale
-                            // Resolve colisões
-                            checkAndResolveCollisions(for: cardIndex, at: card.position)
-                        }
-                )
+                DragGesture()
+                    .onChanged { value in
+                        dragOffset = value.translation
+                    }
+                    .onEnded { value in
+                        card.position.width += dragOffset.width
+                        card.position.height += dragOffset.height
+                        card.position = applyBoundaryLimits(card, x: card.position.width, y: card.position.height)
+                        
+                        // Reset do offset temporário
+                        dragOffset = .zero
+                        
+                        // Resolve colisões
+                        checkAndResolveCollisions(for: cardIndex, at: card.position)
+                    }
+                
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.6), value: dragOffset)
             .animation(.spring(response: 0.3, dampingFraction: 0.6), value: scale)
